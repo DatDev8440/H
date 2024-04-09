@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.sax.views.nhanvien.product.ProductItem">
+  <grid id="27dc6" binding="p" custom-create="true" layout-manager="GridLayoutManager" row-count="7" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="5" left="5" bottom="5" right="5"/>
+    <constraints>
+      <xy x="20" y="20" width="233" height="402"/>
+    </constraints>
+    <properties>
+      <background color="-1"/>
+      <maximumSize width="250" height="385"/>
+      <minimumSize width="225" height="370"/>
+      <opaque value="false"/>
+      <preferredSize width="225" height="385"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="e35ed" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="10">
+        <margin top="0" left="5" bottom="0" right="5"/>
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font size="10"/>
+          <opaque value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="98ee5" class="javax.swing.JLabel" binding="lbPrice">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="20" style="1"/>
+              <foreground color="-1414112"/>
+              <text value="1"/>
+            </properties>
+          </component>
+          <component id="155ba" class="javax.swing.JLabel" binding="discount">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="12"/>
+              <horizontalTextPosition value="11"/>
+              <text value="%"/>
+              <verticalAlignment value="1"/>
+              <verticalTextPosition value="1"/>
+            </properties>
+          </component>
+          <hspacer id="4471d">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+        </children>
+      </grid>
+      <component id="75841" class="javax.swing.JButton" binding="btnAddToCart">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="40"/>
+          </grid>
+        </constraints>
+        <properties>
+          <background color="-1414112"/>
+          <borderPainted value="false"/>
+          <foreground color="-1"/>
+          <text value="Thêm vào giỏ hàng"/>
+        </properties>
+      </component>
+      <grid id="16fd8" binding="image" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="-1" height="215"/>
+          </grid>
+        </constraints>
+        <properties>
+          <opaque value="false"/>
+        </properties>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <grid id="19cf6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="5" bottom="0" right="5"/>
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <opaque value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="cc7ca" class="javax.swing.JLabel" binding="lblSoLuong">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font name=".SF NS Text"/>
+              <text value="Số lượng"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="14e02" class="javax.swing.JTextArea" binding="lbItemName">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <columns value="30"/>
+          <editable value="false"/>
+          <font name=".SF NS Text" size="14"/>
+          <lineWrap value="true"/>
+          <opaque value="false"/>
+          <rows value="2"/>
+          <selectionEnd value="8"/>
+          <selectionStart value="8"/>
+          <text value="Tên sách"/>
+          <verifyInputWhenFocusTarget value="true"/>
+          <wrapStyleWord value="true"/>
+        </properties>
+      </component>
+      <vspacer id="4f394">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="8efc0">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+    </children>
+  </grid>
+</form>

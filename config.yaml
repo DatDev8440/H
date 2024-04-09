@@ -1,0 +1,5 @@
+server: '''localhost'''
+password: ''''''
+databaseName: ''''''
+port: '''''1433'''''
+username: '''''sa'''''
