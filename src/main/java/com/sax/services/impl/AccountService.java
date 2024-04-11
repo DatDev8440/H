@@ -2,13 +2,13 @@ package com.sax.services.impl;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sax.dtos.AccountDTO;
+import com.sax.dtos.KhachHangDTO;
 import com.sax.entities.Account;
 import com.sax.repositories.IAccountRepository;
 import com.sax.services.IAccountService;
 import com.sax.utils.DTOUtils;
 import com.sax.utils.HashUtils;
 import com.sax.utils.ImageUtils;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -28,6 +28,11 @@ public class AccountService implements IAccountService {
     @Autowired
     IAccountRepository repository;
     private int totalPage;
+
+    @Autowired
+    public void setRepo(IAccountRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<AccountDTO> getAll() {
@@ -66,7 +71,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public void update(AccountDTO e) throws SQLServerException {
+    public KhachHangDTO update(AccountDTO e) throws SQLServerException {
         Account account = repository.findById(e.getId()).orElseThrow();
         account.setTenNhanVien(e.getTenNhanVien());
         account.setSdt(e.getSdt());
@@ -97,15 +102,17 @@ public class AccountService implements IAccountService {
                 DTOUtils.getInstance().converter(repository.save(account), AccountDTO.class);
             }
         }
+        return null;
     }
 
     @Override
-    public void delete(Integer id) throws SQLServerException {
+    public boolean delete(Integer id) throws SQLServerException {
         repository.deleteById(id);
+        return false;
     }
 
     @Override
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
         StringBuilder name = new StringBuilder();
         ids.forEach(id->{
             Account e = repository.findRelative(id);
@@ -125,6 +132,7 @@ public class AccountService implements IAccountService {
         });
         if (!name.isEmpty()) throw new DataIntegrityViolationException("Tài khoaản"+name + " không thể xoá, do tài khoản" +
                 " đã bán hàng hoặc tài khoản là quản lý, Chuyển trạng nghỉ với tài khoản nhân viên");
+        return false;
     }
 
     @Override

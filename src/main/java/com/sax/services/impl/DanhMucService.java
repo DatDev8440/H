@@ -2,7 +2,7 @@ package com.sax.services.impl;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sax.dtos.DanhMucDTO;
-import com.sax.dtos.SachDTO;
+import com.sax.dtos.KhachHangDTO;
 import com.sax.entities.DanhMuc;
 import com.sax.entities.Sach;
 import com.sax.repositories.IDanhMucRepository;
@@ -10,11 +10,9 @@ import com.sax.repositories.ISachRepository;
 import com.sax.services.IDanhMucService;
 import com.sax.utils.DTOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -69,18 +67,21 @@ public class DanhMucService implements IDanhMucService {
     }
 
     @Override
-    public void update(DanhMucDTO e) throws SQLServerException {
+    public KhachHangDTO update(DanhMucDTO e) throws SQLServerException {
         repository.save(DTOUtils.getInstance().converter(e, DanhMuc.class));
+        return null;
     }
 
     @Override
-    public void delete(Integer id) throws SQLServerException {
+    public boolean delete(Integer id) throws SQLServerException {
         repository.deleteById(id);
+        return false;
     }
 
     @Override
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
         repository.deleteAllById(ids);
+        return false;
     }
 
 

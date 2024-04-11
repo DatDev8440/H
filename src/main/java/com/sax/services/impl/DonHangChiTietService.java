@@ -3,6 +3,7 @@ package com.sax.services.impl;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sax.dtos.ChiTietDonHangDTO;
 import com.sax.dtos.DonHangDTO;
+import com.sax.dtos.KhachHangDTO;
 import com.sax.entities.ChiTietDonHang;
 import com.sax.entities.DonHang;
 import com.sax.entities.Sach;
@@ -53,7 +54,7 @@ public class DonHangChiTietService implements IDonHangChiTetService {
 
 
     @Override
-    public void update(ChiTietDonHangDTO e) throws SQLServerException {
+    public KhachHangDTO update(ChiTietDonHangDTO e) throws SQLServerException {
         ChiTietDonHang chiTietDonHang = repository.findById(e.getId()).orElseThrow();
         Sach sach = chiTietDonHang.getSach();
         int soLuong = e.getSoLuong() - chiTietDonHang.getSoLuong();
@@ -66,10 +67,11 @@ public class DonHangChiTietService implements IDonHangChiTetService {
         sachRepository.save(sach);
         donHangRepository.save(donHang);
         repository.save(chiTietDonHang);
+        return null;
     }
 
     @Override
-    public void delete(Integer id) throws SQLServerException {
+    public boolean delete(Integer id) throws SQLServerException {
         ChiTietDonHang chiTietDonHang = repository.findById(id).orElseThrow();
         Sach sach = chiTietDonHang.getSach();
         sach.setSoLuong(sach.getSoLuong() - chiTietDonHang.getSoLuong());
@@ -81,11 +83,13 @@ public class DonHangChiTietService implements IDonHangChiTetService {
         sachRepository.save(sach);
         donHangRepository.save(donHang);
         repository.deleteById(id);
+        return false;
     }
 
     @Override
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
 
+        return false;
     }
 
     @Override

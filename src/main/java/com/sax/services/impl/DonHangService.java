@@ -2,6 +2,7 @@ package com.sax.services.impl;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sax.dtos.DonHangDTO;
+import com.sax.dtos.KhachHangDTO;
 import com.sax.entities.*;
 import com.sax.repositories.IDonHangChiTietRepository;
 import com.sax.repositories.IDonHangRepository;
@@ -110,18 +111,21 @@ public class DonHangService implements IDonHangService {
     }
 
     @Override
-    public void update(DonHangDTO e) throws SQLServerException {
+    public KhachHangDTO update(DonHangDTO e) throws SQLServerException {
         repository.save(DTOUtils.getInstance().converter(e, DonHang.class));
+        return null;
     }
 
     @Override
-    public void delete(Integer id) throws SQLServerException {
+    public boolean delete(Integer id) throws SQLServerException {
         repository.deleteById(id);
+        return false;
     }
 
     @Override
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
         repository.deleteAllById(ids);
+        return false;
     }
 
     @Override

@@ -20,8 +20,12 @@ import java.util.Set;
 
 @Service
 public class KhachHangService implements IKhachHangService {
+    public KhachHangService(IKhachHangRepository repository) {
+        this.repository = repository;
+    }
     @Autowired
     private IKhachHangRepository repository;
+
     @Autowired
     IDonHangRepository donHangRepository;
 
@@ -44,25 +48,70 @@ public class KhachHangService implements IKhachHangService {
 
     @Override
     public KhachHangDTO insert(KhachHangDTO e) throws SQLServerException {
+        if (!isValidPhoneNumber(e.getSdt()) ) {
+            throw new IllegalArgumentException("Số điện thoại không hợp lệ", null);
+        }
+        if(e.getSdt().length() < 10 || e.getSdt().length() > 12 ){
+            throw new IllegalArgumentException("Số điện thoại không hợp lệ");
+        }
+        if(e.getDiem() == Integer.MAX_VALUE){
+            throw new IllegalArgumentException("Điểm không hợp lệ");
+
+        }
+        if(e.getDiem()<0){
+            throw new IllegalArgumentException("Điểm không được nhỏ hơn 0");
+        }
+        if(e.getDiem() == null){
+            throw new NullPointerException("Điểm không được null");
+        }
         KhachHang khachHang = DTOUtils.getInstance().converter(e,KhachHang.class);
         khachHang.setNgayThem(LocalDateTime.now());
         return DTOUtils.getInstance().converter(repository.save(khachHang),KhachHangDTO.class);
+
+    }
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        try {
+            // Thử chuyển đổi số điện thoại thành số nguyên
+            Integer.parseInt(phoneNumber);
+            return true;
+        } catch (NumberFormatException e) {
+            return false; // Nếu có lỗi xảy ra khi chuyển đổi, số điện thoại không phải là một số nguyên
+        }
+    }
+    private boolean isValidDiem(String diem) {
+        try {
+            // Thử chuyển đổi số điện thoại thành số nguyên
+            Integer.parseInt(diem);
+            return true;
+        } catch (NumberFormatException e) {
+            return false; // Nếu có lỗi xảy ra khi chuyển đổi, số điện thoại không phải là một số nguyên
+        }
     }
 
+
     @Override
-    public void update(KhachHangDTO e) throws SQLServerException {
+    public KhachHangDTO update(KhachHangDTO e) throws SQLServerException {
+        if(e.getDiem() < 0 ){
+            throw new IllegalArgumentException("Điểm không được nhỏ hơn 0");
+        }
+
+        if (!isValidPhoneNumber(e.getSdt()) ) {
+            throw new IllegalArgumentException("Số điện thoại không hợp lệ", null);
+        }
         repository.save(DTOUtils.getInstance().converter(e,KhachHang.class));
+        return e;
     }
 
 
     @Override
-    public void delete(Integer id) throws SQLServerException {
+    public boolean delete(Integer id) throws SQLServerException {
         repository.deleteById(id);
+        return false;
     }
 
 
     @Override
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
         boolean check = true;
         StringBuilder name = new StringBuilder("Sách");
         for (Integer x : ids) {
@@ -74,6 +123,7 @@ public class KhachHangService implements IKhachHangService {
             }
         }
         if (!check) throw new DataIntegrityViolationException(name + " .Không thể xoá, do khách đã mua hàng!");
+        return check;
     }
 
     @Override

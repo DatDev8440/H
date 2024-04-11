@@ -1,6 +1,7 @@
 package com.sax.services.impl;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import com.sax.dtos.KhachHangDTO;
 import com.sax.dtos.SachDTO;
 import com.sax.entities.*;
 import com.sax.repositories.*;
@@ -11,13 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.IntStream;
 
 @Service
 public class SachService implements ISachService {
@@ -162,7 +161,7 @@ public class SachService implements ISachService {
     }
 
     @Override
-    public void update(SachDTO e) throws SQLServerException {
+    public KhachHangDTO update(SachDTO e) throws SQLServerException {
         Sach sach = repository.findById(e.getId()).orElseThrow(() -> new NoSuchElementException("Khong tim thay"));
         Set<DanhMuc> danhMucSet = DTOUtils.getInstance().convertToDTOSet(e.getSetDanhMuc(), DanhMuc.class);
         sach.setSetDanhMuc(danhMucSet);
@@ -194,14 +193,16 @@ public class SachService implements ISachService {
             repository.save(sach);
             }
         }
+        return null;
     }
 
     @Override
-    public void delete(Integer id) throws SQLServerException {
+    public boolean delete(Integer id) throws SQLServerException {
         repository.deleteById(id);
+        return false;
     }
     @Override
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
         boolean check = true;
         StringBuilder name = new StringBuilder("Sách");
         for (Integer x : ids) {
@@ -217,6 +218,7 @@ public class SachService implements ISachService {
             }
         }
         if (!check) throw new DataIntegrityViolationException(name + ".Không thể xoá, đo sách liên quan thông tin. các sách chuyển trạng thái sang ẩn!");
+        return check;
     }
 
     @Override

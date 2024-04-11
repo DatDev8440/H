@@ -2,6 +2,7 @@ package com.sax.services.impl;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sax.dtos.CtkmDTO;
+import com.sax.dtos.KhachHangDTO;
 import com.sax.repositories.ICtkmRepository;
 import com.sax.services.ICtkmService;
 import com.sax.utils.DTOUtils;
@@ -52,7 +53,7 @@ public class CtkmService implements ICtkmService {
     }
 
     @Override
-    public void update(CtkmDTO e) throws SQLServerException
+    public KhachHangDTO update(CtkmDTO e) throws SQLServerException
     {
         if (e.getNgayBatDau().isBefore(e.getNgayKetThuc())){
             if(LocalDateTime.now().isBefore(e.getNgayBatDau())){
@@ -61,17 +62,20 @@ public class CtkmService implements ICtkmService {
                                 .converter(e, com.sax.entities.Ctkm.class)), CtkmDTO.class);
             }
         }
+        return null;
     }
 
     @Override
-    public void delete(Integer id) throws SQLServerException
+    public boolean delete(Integer id) throws SQLServerException
     {
         repository.deleteById(id);
+        return false;
     }
     @Override
     @Transactional
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
         repository.deleteAllById(ids);
+        return false;
     }
 
     @Override

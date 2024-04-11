@@ -3,7 +3,7 @@ package com.sax.services.impl;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import com.sax.dtos.CtkmDTO;
 import com.sax.dtos.CtkmSachDTO;
-import com.sax.dtos.SachDTO;
+import com.sax.dtos.KhachHangDTO;
 import com.sax.entities.Ctkm;
 import com.sax.entities.CtkmSach;
 import com.sax.repositories.ICtkmSachRepository;
@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class CtkmSachService implements ICtkmSachService {
@@ -58,7 +57,7 @@ public class CtkmSachService implements ICtkmSachService {
     }
 
     @Override
-    public void update(CtkmSachDTO e) throws SQLServerException {
+    public KhachHangDTO update(CtkmSachDTO e) throws SQLServerException {
         if (e.getCtkm().getNgayKetThuc().isAfter(LocalDateTime.now())) {
             if (e.getCtkm().isKieuGiamGia()){
                if (e.getGiaTriGiam()<=100) repository.save(DTOUtils.getInstance().converter(e, CtkmSach.class));
@@ -69,16 +68,18 @@ public class CtkmSachService implements ICtkmSachService {
                 else throw new RuntimeException("Giá trị giảm không được vượt quá giá bán");
             }
         } else throw new RuntimeException("Không thể cập nhật, do chương trình đã kết thúc!");
+        return null;
     }
 
     @Override
-    public void delete(Integer id) throws SQLServerException {
+    public boolean delete(Integer id) throws SQLServerException {
         repository.deleteById(id);
+        return false;
     }
 
     @Transactional
     @Override
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
         boolean check = true;
         StringBuilder name = new StringBuilder("Sách ");
         for (Integer x : ids) {
@@ -89,6 +90,7 @@ public class CtkmSachService implements ICtkmSachService {
             } else repository.deleteById(x);
         }
         if (!check) throw new RuntimeException(name + " .Không thể xoá, do chương trình đã kết thúc!");
+        return check;
     }
 
     @Override

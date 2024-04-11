@@ -1,6 +1,7 @@
 package com.sax.services.impl;
 
 import com.microsoft.sqlserver.jdbc.SQLServerException;
+import com.sax.dtos.KhachHangDTO;
 import com.sax.dtos.LichSuNhapHangDTO;
 import com.sax.dtos.SachDTO;
 import com.sax.entities.LichSuNhapHang;
@@ -61,7 +62,7 @@ public class LichSuNhapHangService implements ILichSuNhapHangService {
     }
 
     @Override
-    public void update(LichSuNhapHangDTO e) throws SQLServerException {
+    public KhachHangDTO update(LichSuNhapHangDTO e) throws SQLServerException {
        if (e.getSoLuong()>0){
            SachDTO dto = e.getSach();
            LichSuNhapHang lichSuNhapHang = repository.findById(e.getId()).orElseThrow();
@@ -74,20 +75,23 @@ public class LichSuNhapHangService implements ILichSuNhapHangService {
            sachService.update(e.getSach());
            repository.save(lichSuNhapHang);
        }else throw new RuntimeException("Số lượng phải lớn hơn 0");
+        return null;
     }
 
     @Override
-    public void delete(Integer id) throws SQLServerException {
+    public boolean delete(Integer id) throws SQLServerException {
         LichSuNhapHang lichSuNhapHang = repository.findById(id).orElseThrow();
         Sach sach = lichSuNhapHang.getSach();
         sach.setSoLuong(sach.getSoLuong()-lichSuNhapHang.getSoLuong());
         sachRepository.save(sach);
         repository.deleteById(id);
+        return false;
     }
 
     @Override
-    public void deleteAll(Set<Integer> ids) throws SQLServerException {
+    public boolean deleteAll(Set<Integer> ids) throws SQLServerException {
         repository.deleteAllById(ids);
+        return false;
     }
 
     @Override
